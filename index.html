@@ -6,7 +6,22 @@
     <title>Hoi dan IT voi ERIC</title>
 </head>
 
-<script src="./video22/video22.js"></script>
+<script>
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function(){
+        if (this.readyState == 4 && request.status === 200){
+            console.log('>>> check res', request);
+        } else {
+            console.log('>>> status: ' + request.status);
+        }
+    }
+
+    request.open('GET',"http://jsonplaceholder.typicode.com/todoss",true);
+    request.send();
+</script>
+
+
 
 <body>
     <h1>Hello world</h1>
