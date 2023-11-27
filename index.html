@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,40 @@
 </head>
 
 <script>
-    var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function(){
-        if (this.readyState == 4 && request.status === 200){
-            console.log('>>> check res', request);
-        } else {
-            console.log('>>> status: ' + request.status);
+    const callback = (error, data) => {
+        if (error) {
+            console.log('>>> calling callback with error: ', error);
+        }
+        if (data) {
+            console.log('>>> calling callback with data: ', data);
         }
     }
 
-    request.open('GET',"http://jsonplaceholder.typicode.com/todoss",true);
-    request.send();
+    function getTodos(callback) {
+        var request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4 && request.status === 200) {
+                const data = request.responseText;
+                callback(undefined, data);
+            }
+            if (this.readyState === 4 && request.status !== 200) {
+                callback('Something wrongs', undefined);
+            }
+        }
+
+        request.open('GET', "http://jsonplaceholder.typicode.com/todos", true);
+        request.send();
+    }
+
+    console.log(1);
+    console.log(2);
+    getTodos(callback);
+    console.log(3);
+    console.log(4);
+
+
 </script>
 
 
@@ -26,4 +49,5 @@
 <body>
     <h1>Hello world</h1>
 </body>
+
 </html>
