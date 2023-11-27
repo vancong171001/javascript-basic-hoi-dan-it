@@ -23,15 +23,18 @@
 
         request.onreadystatechange = function () {
             if (this.readyState === 4 && request.status === 200) {
-                const data = request.responseText;
+                const data = JSON.parse(request.responseText);
+                const dataString = JSON.stringify(data);
                 callback(undefined, data);
+                callback(undefined, dataString);
+                callback(undefined, request.responseText);
             }
             if (this.readyState === 4 && request.status !== 200) {
                 callback('Something wrongs', undefined);
             }
         }
 
-        request.open('GET', "http://jsonplaceholder.typicode.com/todos", true);
+        request.open('GET', "data.json", true);
         request.send();
     }
 
